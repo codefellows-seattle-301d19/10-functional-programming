@@ -1,5 +1,4 @@
 'use strict';
-// REVIEW: Check out all of our new arrow function syntax!
 
 const pg = require('pg');
 const fs = require('fs');
@@ -7,8 +6,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const PORT = process.env.PORT || 3000;
 const app = express();
-// const conString = 'postgres://USERNAME:PASSWORD@HOST:PORT';
-const conString = 'postgres://mike:1234@localhost:5432/kilovolt'; // TODO: Don't forget to set your own conString
+const conString = 'postgres://mike:1234@localhost:5432/kilovolt'; // ***TODO: Don't forget to set your own conString
 const client = new pg.Client(conString);
 client.connect();
 client.on('error', function(err) {
