@@ -10,15 +10,12 @@
     <link rel="stylesheet" href="/styles/layout.css">
     <link rel="stylesheet" href="/styles/modules.css">
     <link rel="icon" type="image/x-icon" href="https://avatars2.githubusercontent.com/u/18607604?v=3&s=200">
-    <script id="stats-template" type="text/x-handlebars-template"></script>
+    <script id="stats-template" type="text/x-handlebars-template">
     <!-- TODO: Setup a template for each row of the Author Stats section of this page: -->
-
-      <ul>
-        <li>{{authorName}}</li>
-        <li>{{wordsTotal}}</li>
-        <li>{{articlesTotal}}</li>
-      </ul>
-
+    <ul>
+      <li><strong>{{authorName}}:</strong> {{wordsTotal}}</li>
+    </ul>
+</script>
   </head>
   <body>
     <header class="site-header clearfix">
