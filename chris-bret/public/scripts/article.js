@@ -1,23 +1,7 @@
 'use strict';
 
-// REVIEW: Check out all of the functions that we've cleaned up with arrow function syntax.
-
-// TODO: Wrap the entire contents of this file in an IIFE.
-// Set a parameter in the anonymous function that we immediately call called module.
-// Then pass in the global browser object - "window" - as an argument to our IIFE.
 (function(module){
   function Article(rawDataObj) {
-    /* REVIEW: In lab 8, we explored a lot of new functionality going on here. Let's re-examine
-    the concept of context.
-    Normally, "this" inside of a constructor function refers to the newly instantiated object.
-    However, in the function we're passing to forEach, "this" would normally refer to "undefined"
-    in strict mode. As a result, we had to pass a second argument to forEach to make sure our "this"
-    was still referring to our instantiated object.
-    One of the primary purposes of lexical arrow functions, besides cleaning up syntax to use fewer
-    lines of code, is to also preserve context. That means that when you declare a function using
-    lexical arrows, "this" inside the function will still be the same "this" as it was outside
-    the function.
-    As a result, we no longer have to pass in the optional "this" argument to forEach!*/
     Object.keys(rawDataObj).forEach(key => this[key] = rawDataObj[key]);
   }
 
@@ -35,20 +19,7 @@
 
   Article.loadAll = rows => {
     rows.sort((a,b) => (new Date(b.publishedOn)) - (new Date(a.publishedOn)));
-
-    // TODO: Refactor this forEach code, by using a `.map` call instead, since what we are trying to accomplish
-    // is the transformation of one collection into another. Remember that we can set variables equal to the result
-    // of functions. So if we set a variable equal to the result of a .map, it will be our transformed array.
-    // There is no need to push to anything.
-
-    /* OLD forEach():
-    rawData.forEach(function(ele) {
-    Article.all.push(new Article(ele));
-  });
-  */
-    Article.all = rows.map(function(data){
-      return new Article(data);
-    })
+    Article.all = rows.map(data => new Article(data))
   };
 
   Article.fetchAll = callback => {
@@ -61,21 +32,18 @@
     )
   };
 
-  // TODO: Chain together a `map` and a `reduce` call to get a rough count of all words in all articles.
   Article.numWordsAll = () => {
-    return Article.all.map(wordTotal=> {
+    return Article.all.map(wordTotal => {
       return wordTotal.body.split(' ').length
-    }).reduce((wordTotal, num)=> {
+    }).reduce((wordTotal, num) => {
       return wordTotal + num;
     },0)
   };
 
-  // TODO: Chain together a `map` and a `reduce` call to produce an array of unique author names. You will
-  // probably need to use the optional accumulator argument in your reduce call.
   Article.allAuthors = () => {
-    return Article.all.map(authorNames=> {
+    return Article.all.map(authorNames => {
       return authorNames.author;
-    }).reduce((authorNames, currentAuthor)=> {
+    }).reduce((authorNames, currentAuthor) => {
       if(!authorNames.includes(currentAuthor)){
         authorNames.push(currentAuthor);
       }
@@ -84,15 +52,15 @@
   };
 
   Article.numWordsByAuthor = () => {
-    return Article.allAuthors().map(authorNames => {
-      // TODO: Transform each author string into an object with properties for
-      // the author's name, as well as the total number of words across all articles
-      // written by the specified author.
-      // HINT: This .map should be setup to return an object literal with two properties.
-      // The first property should be pretty straightforward, but you will need to chain
-      // some combination of filter, map, and reduce to get the value for the second
-      // property.
-
+    return Article.allAuthors().map(authorName => {
+      let wordCount = Article.all.filter((article) => {
+        return article.author === authorName;
+      }).map(oneArticle => {
+        return oneArticle.body.split(' ').length;
+      }).reduce((runningTotal, oneValueInTheArray) => {
+        return runningTotal + oneValueInTheArray;
+      },0);
+      return {name: authorName, wordCount: wordCount}
     })
   };
 
@@ -101,14 +69,13 @@
       url: '/articles',
       method: 'DELETE',
     })
-    .then(console.log) // REVIEW: Check out this clean syntax for just passing 'assumed' data into a named function!
-                       // The reason we can do this has to do with the way Promise.prototype.then works. It's a little
-                       // outside the scope of 301 material, but feel free to research!
+    .then(console.log)
+
+
     .then(callback);
   };
 
   Article.prototype.insertRecord = function(callback) {
-    // REVIEW: Why can't we use an arrow function here for .insertRecord()??
     $.post('/articles', {author: this.author, authorUrl: this.authorUrl, body: this.body, category: this.category, publishedOn: this.publishedOn, title: this.title})
     .then(console.log)
     .then(callback);
