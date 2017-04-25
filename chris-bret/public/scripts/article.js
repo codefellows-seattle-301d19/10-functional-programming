@@ -76,15 +76,15 @@
     return Article.all.map(authorNames=> {
       return authorNames.author;
     }).reduce((authorNames, currentAuthor)=> {
-      if(!authorNames.includes(currentAuthor) {
+      if(!authorNames.includes(currentAuthor)){
         authorNames.push(currentAuthor);
-      });
+      }
       return authorNames;
     },[]);
   };
 
   Article.numWordsByAuthor = () => {
-    return Article.allAuthors().map(author => {
+    return Article.allAuthors().map(authorNames => {
       // TODO: Transform each author string into an object with properties for
       // the author's name, as well as the total number of words across all articles
       // written by the specified author.
