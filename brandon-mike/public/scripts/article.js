@@ -3,15 +3,7 @@
 // REVIEW: Check out all of the functions that we've cleaned up with arrow function syntax.
 
 (function(module){
-  // TODO: Wrap the entire contents of this file in an IIFE.
-  // Set a parameter in the anonymous function that we immediately call called module.
-  // Then pass in the global browser object - "window" - as an argument to our IIFE.
-  function Article(rawDataObj) {
-    /* REVIEW: In lab 8, we explored a lot of new functionality going on here. Let's re-examine
-    the concept of context.
-    Normally, "this" inside of a constructor function refers to the newly instantiated object.
-    However, in th
-  // TODO: Wrap the entire contents of this file in an IIFE.
+  // ***TODO: Wrap the entire contents of this file in an IIFE.
   // Set a parameter in the anonymous function that we immediately call called module.
   // Then pass in the global browser object - "window" - as an argument to our IIFE.
   function Article(rawDataObj) {
@@ -43,7 +35,6 @@
 
   Article.loadAll = rows => {
     rows.sort((a,b) => (new Date(b.publishedOn)) - (new Date(a.publishedOn)));
-
     // TODO: Refactor this forEach code, by using a `.map` call instead, since what we are trying to accomplish
     // is the transformation of one collection into another. Remember that we can set variables equal to the result
     // of functions. So if we set a variable equal to the result of a .map, it will be our transformed array.
@@ -54,6 +45,10 @@
     Article.all.push(new Article(ele));
   });
   */
+    Article.all = rows.map(function(ele){
+      debugger;
+      return new Article(ele);
+    })
 
   };
 
