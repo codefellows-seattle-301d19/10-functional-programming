@@ -57,7 +57,7 @@
   // probably need to use the optional accumulator argument in your reduce call.
   Article.allAuthors = () => {
     return Article.all.map(data => data.author).reduce(function(newArray, name){
-      if(!newArray.contains(name)) newArray.push(name);
+      if(!newArray.includes(name)) newArray.push(name);
       return newArray;
     }, []);
   };
@@ -123,4 +123,5 @@
     .then(console.log)
     .then(callback);
   };
+  module.Article = Article;
 })(window);
