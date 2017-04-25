@@ -1,6 +1,6 @@
 'use strict';
 
-// TODO: Wrap the entire contents of this file in an IIFE.
+// TODO: xx Wrap the entire contents of this file in an IIFE.
 // Pass in to the IIFE a module, upon which objects can be attached for later access.
 
 (function(module) {
@@ -110,9 +110,10 @@ articleView.initIndexPage = function() {
 };
 
 articleView.initAdminPage = function() {
-  // TODO: Call the Handlebars `.compile` function, which will return a function for you to use where needed.
+  // TODO xx: Call the Handlebars `.compile` function, which will return a function for you to use where needed.
   // Make sure you assign the result of your Handlebars.compile call to a variable called "template", since
   // we are then calling "template" on line 117.
+  let template = Handlebars.compile($('#article-template').text());
 
   // REVIEW: We use `forEach` here because we are relying on the side-effects of the callback function:
   // appending to the DOM.
@@ -124,5 +125,5 @@ articleView.initAdminPage = function() {
   $('#blog-stats .words').text(Article.numWordsAll());
 };
 
-module.Article = Article;
+module.articleView = articleView;
 })(window)
