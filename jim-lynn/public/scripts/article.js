@@ -50,13 +50,16 @@
 
   // TODO: Chain together a `map` and a `reduce` call to get a rough count of all words in all articles.
   Article.numWordsAll = () => {
-    return Article.all.map(data => data.body.split(' ').length).reduce((num1, num2) => num1 + num2);
+    return Article.all.map(data => data.body.split(' ').length).reduce((num1, num2) => num1 + num2, 0);
   };
 
   // TODO: Chain together a `map` and a `reduce` call to produce an array of unique author names. You will
   // probably need to use the optional accumulator argument in your reduce call.
   Article.allAuthors = () => {
-    return Article.all.map().reduce();
+    return Article.all.map(data => data.author).reduce(function(newArray, name){
+      if(!newArray.contains(name)) newArray.push(name);
+      return newArray;
+    }, []);
   };
 
   Article.numWordsByAuthor = () => {
@@ -68,8 +71,12 @@
       // The first property should be pretty straightforward, but you will need to chain
       // some combination of filter, map, and reduce to get the value for the second
       // property.
-
-    })
+      let authorObj = {};
+      authorObj.author = author,
+      authorObj.numWords = Article.all.filter(articleObj => articleObj.author === author)
+      .map(articleObjLite => articleObjLite.body.split(' ').length).reduce((num1, num2) => num1 + num2, 0);
+      return authorObj;
+    });
   };
 
   Article.truncateTable = callback => {
