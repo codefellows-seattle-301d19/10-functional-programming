@@ -2,9 +2,11 @@
 
 // REVIEW: Check out all of the functions that we've cleaned up with arrow function syntax.
 
-// TODO: Wrap the entire contents of this file in an IIFE.
+// TODOxx: Wrap the entire contents of this file in an IIFE.
 // Set a parameter in the anonymous function that we immediately call called module.
 // Then pass in the global browser object - "window" - as an argument to our IIFE.
+(function(module) {
+
 function Article(rawDataObj) {
   /* REVIEW: In lab 8, we explored a lot of new functionality going on here. Let's re-examine
   the concept of context.
@@ -45,7 +47,10 @@ Article.loadAll = rows => {
   Article.all.push(new Article(ele));
 });
 */
-
+//Own TODOxx can we use arrow function here?
+Article.all = rows.map(function(ele){
+  return new Article(ele)
+});
 };
 
 Article.fetchAll = callback => {
@@ -60,25 +65,30 @@ Article.fetchAll = callback => {
 
 // TODO: Chain together a `map` and a `reduce` call to get a rough count of all words in all articles.
 Article.numWordsAll = () => {
-  return Article.all.map().reduce()
+  return Article.all.map(article => article.body.split(' ').length).reduce((acc, val) => acc + val);
 };
 
 // TODO: Chain together a `map` and a `reduce` call to produce an array of unique author names. You will
 // probably need to use the optional accumulator argument in your reduce call.
 Article.allAuthors = () => {
-  return Article.all.map().reduce();
+  return Article.all.map(article => article.author).reduce((acc, val) => {
+    if(acc.indexOf(val) < 0) {acc.push(val)};
+    return acc;
+  }
+  , []);
 };
 
 Article.numWordsByAuthor = () => {
   return Article.allAuthors().map(author => {
-    // TODO: Transform each author string into an object with properties for
-    // the author's name, as well as the total number of words across all articles
-    // written by the specified author.
-    // HINT: This .map should be setup to return an object literal with two properties.
-    // The first property should be pretty straightforward, but you will need to chain
-    // some combination of filter, map, and reduce to get the value for the second
-    // property.
+    // TODO: Transform each author string into an object with properties for the author's name, as well as the total number of words across all articles written by the specified author.
 
+    // HINT: This .map should be setup to return an object literal with two properties. The first property should be pretty straightforward, but you will need to chain some combination of filter, map, and reduce to get the value for the second property.
+    let words = Article.all.filter(article => article.author === author).map(article => article.body.split(' ').length).reduce((acc,val) => acc + val);
+      return {
+        name: author,
+        wordCount: words
+
+    };
   })
 };
 
@@ -126,3 +136,5 @@ Article.prototype.updateRecord = function(callback) {
   .then(console.log)
   .then(callback);
 };
+  module.Article = Article;
+})(window)
