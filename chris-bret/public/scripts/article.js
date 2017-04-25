@@ -46,7 +46,9 @@
     Article.all.push(new Article(ele));
   });
   */
-
+    Article.all = rows.map(function(data){
+      return new Article(data);
+    })
   };
 
   Article.fetchAll = callback => {
@@ -61,13 +63,24 @@
 
   // TODO: Chain together a `map` and a `reduce` call to get a rough count of all words in all articles.
   Article.numWordsAll = () => {
-    return Article.all.map().reduce()
+    return Article.all.map(wordTotal=> {
+      return wordTotal.body.split(' ').length
+    }).reduce((wordTotal, num)=> {
+      return wordTotal + num;
+    },0)
   };
 
   // TODO: Chain together a `map` and a `reduce` call to produce an array of unique author names. You will
   // probably need to use the optional accumulator argument in your reduce call.
   Article.allAuthors = () => {
-    return Article.all.map().reduce();
+    return Article.all.map(authorNames=> {
+      return authorNames.author;
+    }).reduce((authorNames, currentAuthor)=> {
+      if(!authorNames.includes(currentAuthor) {
+        authorNames.push(currentAuthor);
+      });
+      return authorNames;
+    },[]);
   };
 
   Article.numWordsByAuthor = () => {
@@ -127,4 +140,6 @@
     .then(console.log)
     .then(callback);
   };
-});
+
+  module.Article = Article;
+}(window));
