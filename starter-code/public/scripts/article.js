@@ -84,52 +84,58 @@
     // The first property should be pretty straightforward, but you will need to chain
     // some combination of filter, map, and reduce to get the value for the second
     // property.
-  })
-};
+      let words = Article.all.filter(article => article.author === author).map(article => article.body.split(' ').length).reduce((acc, val) => acc + val);
+      return {
+        name: author,
+        wordCount: words
+      };
+    })
+  };
 
-Article.truncateTable = callback => {
-  $.ajax({
-    url: '/articles',
-    method: 'DELETE',
-  })
+  Article.truncateTable = callback => {
+    $.ajax({
+      url: '/articles',
+      method: 'DELETE',
+    })
   .then(console.log) // REVIEW: Check out this clean syntax for just passing 'assumed' data into a named function!
                      // The reason we can do this has to do with the way Promise.prototype.then works. It's a little
                      // outside the scope of 301 material, but feel free to research!
   .then(callback);
-};
+  };
 
-Article.prototype.insertRecord = function(callback) {
+  Article.prototype.insertRecord = function(callback) {
   // REVIEW: Why can't we use an arrow function here for .insertRecord()??
-  $.post('/articles', {author: this.author, authorUrl: this.authorUrl, body: this.body, category: this.category, publishedOn: this.publishedOn, title: this.title})
+    $.post('/articles', {author: this.author, authorUrl: this.authorUrl, body: this.body, category: this.category, publishedOn: this.publishedOn, title: this.title})
   .then(console.log)
   .then(callback);
-};
+  };
 
-Article.prototype.deleteRecord = function(callback) {
-  $.ajax({
-    url: `/articles/${this.article_id}`,
-    method: 'DELETE'
-  })
+  Article.prototype.deleteRecord = function(callback) {
+    $.ajax({
+      url: `/articles/${this.article_id}`,
+      method: 'DELETE'
+    })
   .then(console.log)
   .then(callback);
-};
+  };
 
-Article.prototype.updateRecord = function(callback) {
-  $.ajax({
-    url: `/articles/${this.article_id}`,
-    method: 'PUT',
-    data: {
-      author: this.author,
-      authorUrl: this.authorUrl,
-      body: this.body,
-      category: this.category,
-      publishedOn: this.publishedOn,
-      title: this.title,
-      author_id: this.author_id
-    }
-  })
+  Article.prototype.updateRecord = function(callback) {
+    $.ajax({
+      url: `/articles/${this.article_id}`,
+      method: 'PUT',
+      data: {
+        author: this.author,
+        authorUrl: this.authorUrl,
+        body: this.body,
+        category: this.category,
+        publishedOn: this.publishedOn,
+        title: this.title,
+        author_id: this.author_id
+      }
+    })
   .then(console.log)
   .then(callback);
-};
+  };
+
   module.Article = Article;
 })(window);

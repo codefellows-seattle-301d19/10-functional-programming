@@ -2,6 +2,8 @@
 
 // TODO: Wrap the entire contents of this file in an IIFE.
 // Pass in to the IIFE a module, upon which objects can be attached for later access.
+(function(module) {
+
 var articleView = {};
 
 articleView.populateFilters = function() {
@@ -120,3 +122,6 @@ articleView.initAdminPage = function() {
   $('#blog-stats .articles').text(Article.all.length);
   $('#blog-stats .words').text(Article.numWordsAll());
 };
+
+  module.Article = Article;
+})(window);
