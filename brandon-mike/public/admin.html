@@ -1,17 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Lab 10</title>
-    <link rel="stylesheet" href="/vendor/styles/normalize.css">
-    <link rel="stylesheet" href="/styles/icons.css">
-    <link rel="stylesheet" href="/styles/base.css">
-    <link rel="stylesheet" href="/styles/layout.css">
-    <link rel="stylesheet" href="/styles/modules.css">
-    <link rel="icon" type="image/x-icon" href="https://avatars2.githubusercontent.com/u/18607604?v=3&s=200">
-    <!-- TODO: Setup a template for each row of the Author Stats section of this page: -->
-
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Lab 10</title>
+  <link rel="stylesheet" href="/vendor/styles/normalize.css">
+  <link rel="stylesheet" href="/styles/icons.css">
+  <link rel="stylesheet" href="/styles/base.css">
+  <link rel="stylesheet" href="/styles/layout.css">
+  <link rel="stylesheet" href="/styles/modules.css">
+  <link rel="icon" type="image/x-icon" href="https://avatars2.githubusercontent.com/u/18607604?v=3&s=200">
+  <!-- ***TODO: Setup a template for each row of the Author Stats section of this page: -->
+  <script id="stats-template" type="text/x-handlebars-template">
+    <ul>
+      <li><strong>{{name}}:</strong> {{wordCount}}</li>
+    </ul>
   </head>
   <body>
     <header class="site-header clearfix">
@@ -51,9 +54,9 @@
     <script src="/scripts/article.js"></script>
     <script src="/scripts/articleView.js"></script>
     <script>
-      // TODO: After we fetch and load all the articles, what view function do we want to run next?
-      // Let's pass in a callback function, to determine what happens AFTER all articles are loaded.
-      Article.fetchAll();
+    // TODO: After we fetch and load all the articles, what view function do we want to run next?
+    // Let's pass in a callback function, to determine what happens AFTER all articles are loaded.
+    Article.fetchAll();
     </script>
   </body>
-</html>
+  </html>
