@@ -96,7 +96,7 @@
         return runningTotal + oneValueInArray;
       }, 0);
       authorCountObj.wordCount = authorWordCount;
-      return authorCountObj;
+      return { name: authorName, wordCount: wordCount };
     });
   };
 
